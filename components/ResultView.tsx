@@ -83,9 +83,8 @@ React.useEffect(() => {
         Chi tiết bài làm
       </h3>
     </div>
-
     {questions.map((q, idx) => {
-      const u = result.details[idx].answer;
+      const u = result.details?[idx].answer;
       // Logic kiểm tra đúng/sai cho từng loại câu hỏi
       const isCorrect = q.type === 'true-false' 
         ? (Array.isArray(u) && q.s ? u.every((v: any, i: any) => v === q.s![i].a) : false)
