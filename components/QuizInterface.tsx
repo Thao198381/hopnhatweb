@@ -208,7 +208,11 @@ useEffect(() => {
         
         <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
 
-  <div className="bg-white px-4 py-2 rounded-xl shadow font-black text-red-600">
+ <div className={`bg-white px-4 py-2 rounded-xl shadow font-black ${
+  timeLeft < 300 && config.time < 900 
+    ? 'text-red-600 animate-pulse' 
+    : 'text-red-600'
+}`}>
     {formatTime(timeLeft)}
   </div>
 
