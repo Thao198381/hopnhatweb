@@ -85,18 +85,22 @@ React.useEffect(() => {
     </div>
     console.log("DETAILS:", result.details);
     {questions.map((q, idx) => {
-    console.log("DETAIL:", result.details?.[idx]);  
-  const u = result.details?.[idx]?.answer ?? null;
-  if (!result.details || !result.details[idx]) {
-  return <div key={q.id}>⚠️ Thiếu dữ liệu câu {idx+1}</div>;
-}
+  const detail = result.details?.[idx];
+  const u = detail?.answer ?? null;
 
-      // Logic kiểm tra đúng/sai cho từng loại câu hỏi
-      const isCorrect = q.type === 'true-false'
-  ? (Array.isArray(u) && Array.isArray(q.s)
-      ? u.every((v, i) => v === q.s[i]?.a)
-      : false)
-  : u?.toString().trim().toLowerCase() === q.a?.toString().trim().toLowerCase();
+  console.log("DETAIL:", detail);
+
+  if (!detail) {
+    return <div key={q.id}>⚠️ Thiếu dữ liệu câu {idx + 1}</div>;
+  }
+
+  const isCorrect =
+    q.type === 'true-false'
+      ? (Array.isArray(u) && Array.isArray(q.s)
+          ? u.every((v, i) => v === q.s[i]?.a)
+          : false)
+      : u?.toString().trim().toLowerCase() ===
+        q.a?.toString().trim().toLowerCase();
 
       return (
         <div key={q.id} className="bg-white rounded-2xl sm:rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden group">
