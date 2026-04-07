@@ -168,21 +168,26 @@ const chuan_hoa = (data) => ({
   id: data.id          // Giữ nguyên id
 });
   // ========= Chọn môn học ======================
-  useEffect(() => {
+ useEffect(() => {
+  // Hàm này sẽ chạy ngay khi thầy mở trang Admin
   const loadConfig = async () => {
     try {
-      const response = await fetch(`${KETQUA_URL}?action=getAppConfig`);
+      const response = await fetch(`$KETQUA_URL}?action=getAppConfig`, {
+        method: 'GET',
+        redirect: 'follow' // Bắt buộc phải có để tránh lỗi CORS
+      });
       const result = await response.json();
       if (result.status === "success") {
         setSubjects(result.data.topics);
-        console.log("✅ Đã nạp cấu hình thành công!");
+        console.log("✅ Đã nạp cấu hình môn học thành công!");
       }
     } catch (err) {
       console.error("❌ Lỗi nạp Config:", err);
     }
   };
+
   loadConfig();
-}, []);
+}, []); 
   
   const [gvInfo, setGvInfo] = useState({ id: '', pass: '' });  
   const [maTranForm, setMaTranForm] = useState({
