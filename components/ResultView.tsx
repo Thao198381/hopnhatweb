@@ -86,8 +86,11 @@ React.useEffect(() => {
     console.log("DETAILS:", details);
     {questions.map((q, idx) => {
     console.log("DETAIL:", detail);
-  const detail = result.details?.[idx];
-  if (!detail) return null; // hoặc return 1 block cảnh báo
+  const isUserChoice = u === label;
+  const u = result.details?.[idx]?.answer ?? null;
+  if (!result.details || !result.details[idx]) {
+  return <div key={q.id}>⚠️ Thiếu dữ liệu câu {idx+1}</div>;
+}
 
   const u = detail.answer;
       // Logic kiểm tra đúng/sai cho từng loại câu hỏi
