@@ -20,7 +20,7 @@ export const fetchAdminConfig = async () => {
     if (result.status === "success" && result.data) {
       const { topics } = result.data;
       const newTopics: Record<string, Topic[]> = { 
-        "6": [], "7": [], "8": [], "9": [], "10": [], "11": [], "12": [] 
+        "12": [], "11": [], "10": [], "9": [], "8": [], "7": [], "6": [] 
       };
       
       topics.forEach((t: any) => {
