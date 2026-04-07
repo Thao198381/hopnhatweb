@@ -61,7 +61,7 @@ React.useEffect(() => {
             <p className="text-4xl sm:text-5xl md:text-6xl font-black text-white">{result.score.toFixed(2)}</p>
           </div>
           <div className="bg-slate-50 p-5 sm:p-8 rounded-3xl border border-slate-100 shadow-inner">
-            <p className="text-[10px] font-black text-slate-400 uppercase mb-2 tracking-[0.2em]">Thời gian hoàn thành</p>
+            <p className="text-[10px] font-black text-slate-400 uppercase mb-2 tracking-[0.2em]">Thời gian(giây):</p>
             <p className="font-black text-slate-800 text-xl leading-tight">{result.totalTime}</p>
             <p className="text-sm text-slate-500 mt-1 font-bold">{new Date(result.timestamp).toLocaleDateString('vi-VN')} {new Date(result.timestamp).toLocaleTimeString('vi-VN')}</p>
           </div>
