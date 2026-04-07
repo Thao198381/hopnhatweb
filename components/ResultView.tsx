@@ -39,6 +39,7 @@ React.useEffect(() => {
   // Mặc định: coi như text thuần
   return lg;
 };
+  console.log("RESULT FULL:", result);
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 space-y-6 sm:space-y-8 animate-fade-in pb-20 font-sans">
      <div className="bg-white p-5 sm:p-10 md:p-12 rounded-3xl sm:rounded-[3rem] shadow-2xl border border-slate-200 text-center relative overflow-hidden">
@@ -87,9 +88,6 @@ React.useEffect(() => {
     {questions.map((q, idx) => {
   const detail = result.details?.[idx];
   const u = detail?.answer ?? null;
-
- console.log("DETAILS:", result.details);
-
   if (!detail) {
     return <div key={q.id}>⚠️ Thiếu dữ liệu câu {idx + 1}</div>;
   }
