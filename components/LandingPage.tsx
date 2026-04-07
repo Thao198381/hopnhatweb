@@ -1196,18 +1196,17 @@ const handleRedirect = () => {
   SĂN QUÀ QUIZ
 </a>
            <div className="grid grid-cols-2 gap-2">
- {[12, 11, 10].map(g => (
-<button 
+{[12, 11, 10].map(g => (
+  <button 
      key={g} 
-      onClick={() => onSelectGrade(g)} 
-      className="bg-blue-600 text-white p-2.5 rounded-xl font-black text-[10px] uppercase border-b-4 border-blue-800 transition-all active:scale-95 flex items-center justify-center gap-2"
-    >
-      <i className="fas fa-graduation-cap text-[10px]"></i> 
-      <span>Lớp {g}</span>
-</button>
+     onClick={() => onSelectGrade(g)} 
+     // Thêm min-h-[44px] và đổi text-[10px] thành text-xs
+     className="bg-blue-600 text-white p-2.5 min-h-[44px] rounded-xl font-black text-xs uppercase border-b-4 border-blue-800 transition-all active:scale-95 flex items-center justify-center gap-2"
+  >
+     <i className="fas fa-graduation-cap text-xs"></i> 
+     <span>Lớp {g}</span>
+  </button>
 ))}
-
-
 
 {/* Nút Thi đề lẻ - Chốt ngay sau Lớp 12 */}
 <button 
