@@ -85,8 +85,7 @@ React.useEffect(() => {
     </div>
     console.log("DETAILS:", result.details);
     {questions.map((q, idx) => {
-    console.log("DETAIL:", result.details?.[idx]);
-  const isUserChoice = u === label;
+    console.log("DETAIL:", result.details?.[idx]);  
   const u = result.details?.[idx]?.answer ?? null;
   if (!result.details || !result.details[idx]) {
   return <div key={q.id}>⚠️ Thiếu dữ liệu câu {idx+1}</div>;
