@@ -26,7 +26,8 @@ const App: React.FC = () => {
   
   // 2. Quản lý chế độ (Mode) cho Admin hoặc Giáo viên
   const [adminMode, setAdminMode] = useState<'matran' | 'cauhoi' | 'word'>('matran'); 
-  
+  const [examStarted, setExamStarted] = useState(false);
+  const [currentView, setCurrentView] = useState('landing');
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
   const [activeExam, setActiveExam] = useState<any>(null);
   const [activeStudent, setActiveStudent] = useState<Student | null>(null);
@@ -154,18 +155,22 @@ const App: React.FC = () => {
  // 1. Phải khai báo hàm này trước
 const handleFinishWord = async (results) => {
     try {
+        const currentIDGV = activeStudent?.idgv?.toString().trim() || "";
         const targetUrl = KETQUA_URL;
+
         const payload = {
             action: "submitExamWord",
             timestamp: new Date().toLocaleString('vi-VN'),
-            exams: String(studentInfo.examCode || "").toUpperCase(),
-            sbd: String(studentInfo.sbd || ""),
-            name: String(studentInfo.name || ""),
-            class: String(studentInfo.class || ""),
+            exams: String(activeExam?.code || "").toUpperCase(),
+            sbd: String(activeStudent?.sbd || ""),
+            name: String(activeStudent?.name || ""),
+            class: String(activeStudent?.class || ""),
             tongdiem: String(results.score || 0).replace('.', ','),
             time: results.timeSpent || 0,
-            idgv: String(studentInfo.idgv || "")
+            idgv: currentIDGV
         };
+
+        console.log("Đang gửi payload đề lẻ:", payload);
 
         const response = await fetch(targetUrl, {
             method: "POST",
@@ -173,37 +178,17 @@ const handleFinishWord = async (results) => {
             body: JSON.stringify(payload)
         });
 
-        const resText = await response.text(); // CHỈ ĐỌC 1 LẦN NÀY
-        console.log("Kết quả:", resText);
-        
-        setExamStarted(false); // Đóng phòng thi
-        alert("Nộp bài thành công!");
+        const resText = await response.text();
+        console.log("Kết quả từ GAS:", resText);
+
+        alert(`Nộp bài thành công! Điểm: ${payload.tongdiem}`);
+        setExamResult(results);
+        setCurrentView('result');
     } catch (error) {
-        console.error("Lỗi nộp bài:", error);
+        console.error("Lỗi nộp bài đề lẻ:", error);
+        alert("Lỗi kết nối khi nộp bài!");
     }
 };
-
-// 2. Trong phần return UI (JSX)
-return (
-    <div>
-        {examStarted ? (
-            <ExamRoom 
-                questions={questions} 
-                studentInfo={studentInfo}
-                duration={duration} 
-                minSubmitTime={minSubmitTime}
-                maxTabSwitches={maxTabSwitches}
-                deadline={deadline}
-               scoreMCQ={scoreMCQ}
-               scoreTF={scoreTF}
-              scoreSA={scoreSA}
-              onFinish={handleFinishWord} // Đảm bảo tên này khớp với hàm ở trên
-            />
-        ) : (
-            <LandingPageUI />
-        )}
-    </div>
-);
  return (
     <AppProvider>
       <div className="min-h-screen flex flex-col font-sans selection:bg-blue-100 bg-slate-50 text-slate-900">
