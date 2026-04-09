@@ -18,7 +18,7 @@ interface ExamRoomProps {
     idgv: string;
     sbd: string;
     name: string;
-    className: string;
+    class: string;
     examCode: string;
   };
   duration: number;
