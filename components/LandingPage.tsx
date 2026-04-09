@@ -480,7 +480,7 @@ const handleStudentSubmit = async (e) => {
       setStudentInfo({
         ...studentInfo,
         name: nameFromGas,
-        className: classFromGas
+        class: classFromGas
       });
 
       setExamStarted(true); 
@@ -843,7 +843,7 @@ const handleRedirect = () => {
         action: "submitExam", // Hành động ghi điểm
         sbd: studentInfo.sbd,
         examCode: studentInfo.examCode,
-        className: studentInfo.className,
+        class: studentInfo.class,
         idgv: currentIDGV,
         name: studentInfo.name,
         ...resultData // Đẩy toàn bộ tongdiem, time... vào body
@@ -907,12 +907,12 @@ const handleRedirect = () => {
   const diemHienThi = String(rawScore).replace('.', ',');
 
   const payload = {
-    action: "submitExam",
+    action: "submitExamWord",
     timestamp: new Date().toLocaleString('vi-VN'),   
     exams: String(studentInfo.examCode || "").toUpperCase(),
     sbd: String(studentInfo.sbd || ""),
     name: String(studentInfo.name || ""),
-    class: String(studentInfo.className || ""), // Đảm bảo key này khớp với GAS
+    class: String(studentInfo.class || ""), // Đảm bảo key này khớp với GAS
     tongdiem: diemHienThi, 
     time: resultData.time || 0,
     idgv: String(studentInfo.idgv || ""),
