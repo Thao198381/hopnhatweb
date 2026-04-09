@@ -117,22 +117,38 @@ const App: React.FC = () => {
   };
 
   try {
-    console.log("Đang gửi payload lên GAS:", payload); // Thêm dòng này
-    const response = await fetch(targetUrl, {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
-    const res = await response.json();
-    const resText = response.text(); // Đọc dạng text trước để tránh lỗi JSON parse
+  console.log("Đang gửi payload lên GAS:", payload);
+  
+  const response = await fetch(targetUrl, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(payload),
+  });
+
+  // PHẢI có await ở đây và CHỈ ĐỌC 1 LẦN
+  const resText = await response.text(); 
   console.log("Phản hồi thô từ GAS:", resText);
-    if (res.status === "success") {
-      setExamResult(results);
-      setCurrentView('result');
-    }
-  } catch (error) {
-    alert("Lỗi ghi kết quả ma trận: " + error.message);
+
+  let res;
+  try {
+    res = JSON.parse(resText);
+  } catch (parseError) {
+    console.error("Dữ liệu trả về không phải JSON chuẩn:", resText);
   }
-};
+
+  if (res && res.status === "success") {
+    alert(`Nộp bài thành công! Điểm của bạn: ${payload.tongdiem}`);
+    setExamResult(results); // Cập nhật kết quả để hiển thị bảng điểm
+    setExamStarted(false);  // Tắt chế độ làm bài
+    if (typeof setCurrentView === 'function') setCurrentView('result');
+  } else {
+    console.warn("GAS báo lỗi hoặc không có phản hồi success:", res);
+  }
+
+} catch (error) {
+  console.error("LỖI KẾT NỐI FETCH:", error);
+  alert("Lỗi đường truyền, hãy chụp ảnh màn hình kết quả này!");
+}
 
   // Kết thúc bài thi và gửi dữ liệu từ đề nhập word
  const handleFinishWord = async (results) => {
