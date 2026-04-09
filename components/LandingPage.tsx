@@ -854,24 +854,7 @@ const handleRedirect = () => {
 
 }, [matrixTopics, selectedGrade]);
   return (
-    <>
-    {/* TRƯỜNG HỢP 1: ĐANG THI (Hiện phòng thi, ẩn toàn bộ Landing) */}
-   {examStarted ? (
-  <div className="animate-in slide-in-from-bottom duration-500">
-    <ExamRoom 
-      questions={questions} 
-      studentInfo={studentInfo}
-      duration={duration} 
-      minSubmitTime={minSubmitTime}
-      maxTabSwitches={maxTabSwitches}
-      deadline={deadline}
-      scoreMCQ={scoreMCQ}
-      scoreTF={scoreTF}
-      scoreSA={scoreSA}
-      onFinish={handleFinishWord} // Gọi hàm đã định nghĩa ở ngoài
-    />
-  </div> 
-    ) : (
+    <>  
     <div className="min-h-screen bg-slate-50 font-sans pb-12 overflow-x-hidden">
       
      {/* 1. TOP NAV (Style SmartEdu - Đã tích hợp VIP lấp lánh) */}
