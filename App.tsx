@@ -100,62 +100,66 @@ const App: React.FC = () => {
   };
 
   // Kết thúc bài thi và gửi dữ liệu
-  const handleFinishExam = async (result: ExamResult) => {
-  setExamResult(result);
-  setCurrentView('result');
-  
-  let targetUrl = (result.type === 'quiz') ? DANHGIA_URL : KETQUA_URL;
+  const handleFinishExam = async (results) => {
+  const currentIDGV = activeStudent.idgv.toString().trim();
+  const targetUrl = KETQUA_URL; // Link Script của giáo viên
 
-  // CHUẨN HÓA DỮ LIỆU TRƯỚC KHI GỬI
   const payload = {
-    action: "submitExam", // Thêm cái này để GAS nhận diện action
+    action: "submitExamMatrix", // Action riêng cho ma trận
     timestamp: new Date().toLocaleString('vi-VN'),
-    exams: String(activeExam?.id || result.examCode || "").toUpperCase(),
-    sbd: String(activeStudent?.sbd || ""),
-    name: String(activeStudent?.name || ""),
-    class: String(activeStudent?.class || ""),
-    tongdiem: result.totalScore ?? result.tongdiem ?? 0,
-    time: result.time || 0,
-    idgv: String(activeStudent?.idnumber || ""), 
-    // Gán trực tiếp modeKq ở đây để không bao giờ sai cột I
-    modeKq: String(activeExam?.id || "") + "." + String(activeStudent?.idnumber || "")   
+    exams: activeExam.code,
+    sbd: activeStudent.sbd,
+    name: activeStudent.name,
+    class: activeStudent.class,
+    tongdiem: results.score,
+    time: results.timeSpent, // Thời gian làm bài (giây/phút)
+    idgv: currentIDGV
   };
 
   try {
-    await fetch(targetUrl, { 
-      method: 'POST', 
-      // Bỏ no-cors nếu GAS của thầy đã hỗ trợ, hoặc để 'text/plain'
-      body: JSON.stringify(payload) 
+    const response = await fetch(targetUrl, {
+      method: "POST",
+      body: JSON.stringify(payload),
     });
-    console.log("✅ Gửi kết quả chuẩn thành công!");
-  } catch (e) { 
-    console.error("❌ Lỗi gửi kết quả:", e); 
+    const res = await response.json();
+    if (res.status === "success") {
+      setExamResult(results);
+      setCurrentView('result');
+    }
+  } catch (error) {
+    alert("Lỗi ghi kết quả ma trận: " + error.message);
   }
 };
 
   // Kết thúc bài thi và gửi dữ liệu từ đề nhập word
- const handleFinishWord = async (result: any) => {
+ const handleFinishWord = async (results) => {
+  const currentIDGV = activeStudent.idgv.toString().trim();
+  const targetUrl = KETQUA_URL;
 
-  const normalizedResult: ExamResult = {
-    score: Number(result.tongdiem ?? 0),
-    correct: result.correct ?? 0,
-    total: result.total ?? 0,
-    time: result.timeUsed ?? 0,
-    type: 'exam'
+  const payload = {
+    action: "submitExamWord", // Action riêng cho đề lẻ
+    timestamp: new Date().toLocaleString('vi-VN'),
+    exams: activeExam.code,
+    sbd: activeStudent.sbd,
+    name: activeStudent.name,
+    class: activeStudent.class,
+    tongdiem: results.score,
+    time: results.timeSpent,
+    idgv: currentIDGV
   };
 
-  setExamResult(normalizedResult);
-  setCurrentView('result');
-
-  let targetUrl = KETQUA_URL;
   try {
-    await fetch(targetUrl, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: JSON.stringify(normalizedResult)
+    const response = await fetch(targetUrl, {
+      method: "POST",
+      body: JSON.stringify(payload),
     });
-  } catch (e) {
-    console.error("Lỗi gửi kết quả:", e);
+    const res = await response.json();
+    if (res.status === "success") {
+      setExamResult(results);
+      setCurrentView('result');
+    }
+  } catch (error) {
+    alert("Lỗi ghi kết quả đề lẻ: " + error.message);
   }
 };
  return (
