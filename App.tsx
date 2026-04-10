@@ -26,8 +26,7 @@ const App: React.FC = () => {
   
   // 2. Quản lý chế độ (Mode) cho Admin hoặc Giáo viên
   const [adminMode, setAdminMode] = useState<'matran' | 'cauhoi' | 'word'>('matran'); 
-  const [examStarted, setExamStarted] = useState(false);
-  const [currentView, setCurrentView] = useState('landing');
+  const [examStarted, setExamStarted] = useState(false);  
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
   const [activeExam, setActiveExam] = useState<any>(null);
   const [activeStudent, setActiveStudent] = useState<Student | null>(null);
@@ -354,6 +353,6 @@ const VipModal = ({ user, onClose, onSuccess }: { user: AppUser, onClose: () => 
       </div>
     </div>
   );
-};
+
 
 export default App;
