@@ -112,7 +112,7 @@ const App: React.FC = () => {
     name: activeStudent.name,
     class: activeStudent.class,
     tongdiem: results.score,
-    time: result.time || 0,, // Thời gian làm bài (giây/phút)
+    time: result.time || 0, // Thời gian làm bài (giây/phút)
     idgv: currentIDGV
   };
 
