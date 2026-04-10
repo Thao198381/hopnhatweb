@@ -353,6 +353,6 @@ const VipModal = ({ user, onClose, onSuccess }: { user: AppUser, onClose: () => 
       </div>
     </div>
   );
-
+};
 
 export default App;
