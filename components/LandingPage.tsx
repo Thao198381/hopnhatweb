@@ -853,8 +853,7 @@ const handleRedirect = () => {
     .sort((a,b) => Number(b.grade) - Number(a.grade));
 
 }, [matrixTopics, selectedGrade]);
-  return (
-    <>  
+  return ( 
     <div className="min-h-screen bg-slate-50 font-sans pb-12 overflow-x-hidden">
       
      {/* 1. TOP NAV (Style SmartEdu - Đã tích hợp VIP lấp lánh) */}
@@ -2225,8 +2224,7 @@ const handleRedirect = () => {
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     `}</style>
-  </>
-  );
+   );
 }
 
 export default LandingPage;
