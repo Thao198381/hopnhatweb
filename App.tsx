@@ -149,6 +149,7 @@ const App: React.FC = () => {
   console.error("LỖI KẾT NỐI FETCH:", error);
   alert("Lỗi đường truyền, hãy chụp ảnh màn hình kết quả này!");
 }
+};
 
   // Kết thúc bài thi và gửi dữ liệu từ đề nhập word
  // 1. Phải khai báo hàm này trước
