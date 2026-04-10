@@ -112,7 +112,7 @@ const App: React.FC = () => {
     name: activeStudent.name,
     class: activeStudent.class,
     tongdiem: results.score,
-    time: results.time || 0,
+    time: results.time || results.totalTime,
     idgv: currentIDGV
   };
 
