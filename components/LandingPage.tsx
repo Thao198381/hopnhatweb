@@ -914,7 +914,7 @@ const handleRedirect = () => {
     exams: String(studentInfo.examCode || "").toUpperCase(),
     sbd: String(studentInfo.sbd || ""),
     name: String(studentInfo.name || ""),
-    class: String(studentInfo.className || ""), // Đảm bảo key này khớp với GAS
+    class: String(studentInfo.class || ""), // Đảm bảo key này khớp với GAS
     tongdiem: diemHienThi, 
     time: resultData.time || 0,
     idgv: String(studentInfo.idgv || ""),
